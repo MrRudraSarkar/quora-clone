@@ -6,6 +6,10 @@
 <body>
     <h1>All Questions</h1>
 
+    <p>
+        <a href="{% url 'question_create' %}">Ask a new question</a>
+    </p>
+
     {% if questions %}
         <ul>
             {% for question in questions %}
