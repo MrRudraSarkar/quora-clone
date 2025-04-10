@@ -16,7 +16,11 @@ class Answer(models.Model):
     body = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-    likes = models.ManyToManyField(User, related_name='liked_answers', blank=True)
+
+    liked_by = models.ManyToManyField(User, related_name='liked_answers', blank=True)
+
+    def total_likes(self):
+        return self.liked_by.count()
     
     def __str__(self):
-        return f"Answer to: {self.question.title}"
+        return self.body[:50]

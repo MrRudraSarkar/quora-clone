@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Question
+from .models import Question, Answer
 from .forms import QuestionForm, AnswerForm
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
@@ -58,3 +58,14 @@ def signup_view(request):
     else:
         form = UserCreationForm()
     return render(request, 'core/signup.html', {'form': form})
+
+@login_required
+def like_answer(request, answer_id):
+    answer = get_object_or_404(Answer, id=answer_id)
+
+    if request.user in answer.liked_by.all():
+        answer.liked_by.remove(request.user)
+    else:
+        answer.liked_by.add(request.user)
+
+    return redirect('question_detail', question_id=answer.question.id)
