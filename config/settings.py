@@ -125,3 +125,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # settings.py
 LOGIN_REDIRECT_URL = 'question_list'
+LOGOUT_REDIRECT_URL = 'home'
