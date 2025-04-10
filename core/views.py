@@ -4,6 +4,8 @@ from .forms import QuestionForm, AnswerForm
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 # Create your views here.
 def question_list(request):
@@ -38,10 +40,21 @@ def post_answer(request, question_id):
     question = get_object_or_404(Question, id=question_id)
     if request.method == 'POST':
         form = AnswerForm(request.POST)
-        if form.isValid():
+        if form.is_valid():
             answer = form.save(commit=False)
             answer.author = request.user
             answer.question = question
             answer.save()
     
     return redirect('question_detail', question_id = question_id)
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('question_list')
+    else:
+        form = UserCreationForm()
+    return render(request, 'core/signup.html', {'form': form})
