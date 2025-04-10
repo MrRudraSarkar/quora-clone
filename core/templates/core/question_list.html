@@ -1,23 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Questions</title>
-</head>
-<body>
-    <h1>All Questions</h1>
+<!-- core/templates/core/question_list.html -->
+{% extends 'core/base.html' %}
 
-    <p>
-        <a href="{% url 'question_create' %}">Ask a new question</a>
-    </p>
+{% block content %}
+<h2>All Questions</h2>
+<a href="{% url 'post_question' %}">Ask a Question</a>
 
-    {% if questions %}
-        <ul>
-            {% for question in questions %}
-                <li>{{ question.title }} - {{ question.created_at }}</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No questions have been posted yet.</p>
-    {% endif %}
-</body>
-</html>
+<ul>
+  {% for question in questions %}
+    <li>
+      <a href="{% url 'question_detail' question.id %}">{{ question.title }}</a>
+      <br>
+      Asked by: {{ question.author.username }} on {{ question.created_at }}
+    </li>
+  {% empty %}
+    <li>No questions yet.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

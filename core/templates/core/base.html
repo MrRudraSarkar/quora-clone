@@ -1,0 +1,19 @@
+<!-- core/templates/core/base.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MiniQuora</title>
+</head>
+<body>
+    <h1><a href="{% url 'question_list' %}">MiniQuora</a></h1>
+
+    {% if user.is_authenticated %}
+        <p>Welcome, {{ user.username }} | <a href="{% url 'logout' %}">Logout</a></p>
+    {% else %}
+        <p><a href="{% url 'login' %}">Login</a> | <a href="{% url 'signup' %}">Signup</a></p>
+    {% endif %}
+
+    <hr>
+    {% block content %}{% endblock %}
+</body>
+</html>

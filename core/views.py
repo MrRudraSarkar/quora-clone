@@ -21,7 +21,7 @@ def post_question(request):
             return redirect('question_list')
     else:
         form = QuestionForm()
-    return render(request, 'core/question_form.html', {'form': form})
+    return render(request, 'core/post_question.html', {'form': form})
 
 def question_detail(request, question_id):
     question = get_object_or_404(Question, id=question_id)
